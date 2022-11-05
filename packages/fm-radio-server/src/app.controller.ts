@@ -7,7 +7,7 @@ export class AppController {
 
   @Post('switch-freq/:frequency')
   switchFreq(@Param('frequency') frequency: number): Promise<StationInfo> {
-    return this.appService.switchFreq(frequency);
+    return this.appService.switchFreq(Number(frequency));
   }
 
   @Post('stop')
