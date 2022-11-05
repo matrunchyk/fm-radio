@@ -6,6 +6,9 @@ Provides an ability to play any AM/FM radio station in your browser or any RTMP-
 
 - An SDR dongle on RTL2832 chip, like [rtl-sdr.com](https://www.rtl-sdr.com/) (tested), or HackRF, BladeRF, or any other, compatible with [rtl_fm](https://manpages.org/rtl_fm). 
 - Node 16+ installed on your system
+- Linux or macOS system
+- Installed `ffmpeg` (`brew install ffmpeg` on OSX and `apt install ffmpeg` on Ubuntu/Debian)
+- Installed `rtl_fm` binary (`brew install librtlsdr` on OSX and `apt install librtlsdr` on Ubuntu/Debian)
 
 ### Usage
 

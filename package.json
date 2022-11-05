@@ -1,7 +1,7 @@
 {
   "name": "fm-radio",
   "description": "FM Radio Server & Client",
-  "keywords": ["rtl-sdr", "sdr", "fm", "radio", "ffmpeg", "rtl_gm", "hackrf", "bladerf"],
+  "keywords": ["rtl-sdr", "sdr", "fm", "radio", "ffmpeg", "rtl_fm", "hackrf", "bladerf"],
   "homepage": "https://github.com/matrunchyk/fm-radio",
   "license": "MIT",
   "bugs": "https://github.com/matrunchyk/fm-radio/isssues",
