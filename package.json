@@ -1,0 +1,10 @@
+{
+  "name": "fm-radio",
+  "workspaces": [
+    "packages/fm-radio-server",
+    "packages/fm-radio-client"
+  ],
+  "scripts": {
+    "server:dev": "npm run start:dev --workspace=fm-radio-server"
+  }
+}
