@@ -1,9 +1,13 @@
-import { Controller, Param, Post } from '@nestjs/common';
+import { Controller, Get, Param, Post } from '@nestjs/common';
 import { AppService, StationInfo } from './app.service.js';
+import { ConfigService } from '@nestjs/config';
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  constructor(
+    private readonly appService: AppService,
+    private configService: ConfigService,
+  ) {}
 
   @Post('switch-freq/:frequency')
   switchFreq(@Param('frequency') frequency: number): Promise<StationInfo> {
@@ -13,5 +17,10 @@ export class AppController {
   @Post('stop')
   stop() {
     return this.appService.stop();
+  }
+
+  @Get('stations')
+  getStations(): Record<number, string> {
+    return this.configService.get<Record<number, string>>('stations') || {};
   }
 }
