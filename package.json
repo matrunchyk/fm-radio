@@ -16,7 +16,7 @@
   ],
   "scripts": {
     "server": "npm run start:dev --workspace=fm-radio-server",
-    "client": "npm run start:dev --workspace=fm-radio-client"
+    "client": "npm run dev --workspace=fm-radio-client"
   },
   "engines": {
     "node": "^16"
