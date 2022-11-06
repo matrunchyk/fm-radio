@@ -2,25 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { ChildProcessByStdio, spawn } from 'child_process';
 import { Readable, Writable } from 'stream';
 import { setTimeout } from 'timers/promises';
-
-const FM_FREQ_TITLE = {
-  88.3: 'Українське радіо Волинь',
-  88.7: 'Lux FM & Radio Maximum',
-  89.8: 'FM Galychyna',
-  90.2: 'Авторадіо',
-  90.6: 'Радіо українських доріг',
-  91.5: 'Радіо НВ',
-  100.1: 'Радіо 1',
-  100.9: 'Радіо Аверс',
-  101.9: 'Культура',
-  102.4: 'СіД ФМ',
-  103.4: 'Шансон',
-  104.8: 'Наше Радіо',
-  105.5: 'Релакс',
-  106.2: 'Hit FM',
-  106.9: 'Ритм',
-  107.3: 'Промінь',
-} as Record<number, string>;
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 export interface StationInfo {
   title: string;
@@ -33,10 +15,12 @@ export class AppService {
   private ffmpegProcess?: ChildProcessByStdio<Writable, Readable, Readable>;
 
   private readonly logger = new Logger(AppService.name);
+
   private readonly rtlFmLogger = new Logger('rtl_fm');
+
   private readonly ffmpegLogger = new Logger('ffmpeg');
 
-  constructor() {
+  constructor(private configService: ConfigService) {
     this.switchFreq(88.3);
   }
 
@@ -64,10 +48,12 @@ export class AppService {
     this.logger.log(`Switching to frequency: ${frequency}`);
     // rtl_fm -f 88.3M -M fm -s 170k -A std -l 0 -E deepm -r 44.1k | ffmpeg -f s16le -ac 1 -i pipe:0 -acodec libmp3lame -ab 128k -f rtp rtp://127.0.0.1:1234`;
 
+    await ConfigModule.envVariablesLoaded;
+    const stations =
+      this.configService.get<Record<number, string>>('stations') || {};
+
     const title =
-      frequency in FM_FREQ_TITLE
-        ? FM_FREQ_TITLE[frequency]
-        : `Radio ${frequency}`;
+      frequency in stations ? stations[frequency] : `Radio ${frequency}`;
     const RTL_FM_ARGS = [
       '-f',
       `${frequency}M`,
